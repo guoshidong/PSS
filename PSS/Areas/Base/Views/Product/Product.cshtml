@@ -1,0 +1,209 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>商品信息管理</title>
+    <link href="~/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<body class="easyui-layout">
+    <script>
+    //加载显示树形控件
+    $(function () {
+        //树型控件的选择项改变事
+        $("#tree1").tree({
+            "onSelect": function () {
+                //得到当前选中的节点
+                var node = $("#tree1").tree("getSelected");
+                //让右边的表格重新加载数据
+                $('#tb1').datagrid('load', {
+                    "kid": node.id
+                });
+            }
+        });
+    });
+
+    //删除
+    function Kinddel() {
+        //检查
+        var row = $("#tree1").tree("getSelected");
+        //选中一行
+        if (row == null) {
+            $.messager.alert('警告', '请先选中一行', 'warning');
+            return;
+        }
+        console.log(row);
+        $.messager.confirm('询问', '确认是否删除' + row.text + '吗？', function (r) {
+            if (r) {
+                $.get("@Url.Action("DeleteKind")", { "kid": row.id }, function (r2) {
+                    if (r2 > 0) {
+                        //重新加载学员列表
+                        $("#tree1").tree("reload");
+                    }
+                });
+            }
+        });
+    }
+
+    //打开一个类别创建窗口
+    function Kindadd() {
+        //打开添加窗口
+        $('#wedit').window('open');
+        //在表单上显示类别名 (还有隐藏的id也赋上了值)
+        $("#form_Add").form("load", row);
+    }
+
+    //添加类别提交
+    function Add_ok() {
+        //验证
+        if (!$("#form_Add").form('validate')) return;
+        //提交
+        $("#form_Add").submit();
+        //关闭窗口
+        $("#wedit").window("close");
+    }
+
+    //更新完成
+    function updated() {
+        //关闭窗口
+        $("#wedit").window("close");
+        //重新加载学员列表
+        $("#tree1").tree("reload");
+    }
+
+    //修改类别
+    function Kindedit() {
+        //检查
+        var r = $("#tree1").tree("getSelected");
+        if (r == null) {
+            $.messager.alert('警告', '请先选中一行', 'warning');
+            return;
+        }
+
+        //打开修改窗口
+        $('#wedit1').window("open");
+        //在表单上显示类别名 (还有隐藏的id也赋上了值)
+        $("#form_Kindedit").form("load", r);
+    }
+
+    //提交修改窗口
+    function Kindedit_ok() {
+        //提交
+        $("#form_Kindedit").submit();
+        //关闭窗口
+        $("#wedit1").window("close");
+    }
+    </script>
+
+
+    <div class="easyui-layout" style="width:100%;height:100%;">
+        <div data-options="region:'west',collapsible:false"
+             title="商品类别" style="width:200px;">
+            <!-- 工具栏 -->
+            <div id="tools1" style="height:auto;">
+                <a iconcls="icon-add" onclick="Kindadd();" href="javascript:;" class="easyui-linkbutton" plain="true">新增</a>
+                <a iconcls="icon-edit" onclick="Kindedit();" href="javascript:;" class="easyui-linkbutton" plain="true">修改</a>
+                <a iconcls="icon-cancel" onclick="Kinddel();" href="javascript:;" class="easyui-linkbutton" plain="true">删除</a>
+            </div>
+            <table class="easyui-datagrid" toolbar="#tools1"></table>
+
+            <!-- 商品类别 -->
+            <ul id="tree1" class="easyui-tree" url="@Url.Action("ProductKinds")"></ul>
+        </div>
+
+        <!-- 添加类别的窗口 -->
+        <div id="wedit" class="easyui-window" title="添加商品类别" data-options="modal:true,closed:true,iconCls:'icon-edit',minimizable:false,maximizable:false,
+			onResize:function(){
+				$(this).window('hcenter');
+			}" style="width:500px;height:320px;padding:10px;">
+            <div class="easyui-layout" data-options="fit:true">
+                <div data-options="region:'center'" style="padding:10px;">
+
+                    <!-- 添加学员的表单 -->
+                    @using (Ajax.BeginForm("Kindadd", new { }, new AjaxOptions() { OnSuccess = "updated();" }, new { id = "form_Add" }))
+                    {
+                        <div style="margin-bottom:20px">
+                            <input class="easyui-textbox" name="KindName" style="width:100%" data-options="label:'商品类别名:',required:true">
+                            <input type="hidden" name="id" value="" />
+                        </div>
+                    }
+                </div>
+                <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:;" onclick="Add_ok();" style="width:80px">确定</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="$('#wedit').window('close')" style="width:80px">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <div data-options="region:'center'" title="商品管理">
+
+            <!-- 商品列表的工具栏 -->
+            <div id="tools2" style="height:auto;">
+                <a iconcls="icon-add" onclick="add();" href="javascript:;" class="easyui-linkbutton" plain="true">新增</a>
+                <a iconcls="icon-edit" onclick="edit();" href="javascript:;" class="easyui-linkbutton" plain="true">修改</a>
+                <a iconcls="icon-cancel" onclick="del();" href="javascript:;" class="easyui-linkbutton" plain="true">删除</a>
+            </div>
+            <!-- 商品列表 -->
+            <table id="tb1" class="easyui-datagrid"
+                   height="100%"
+                   width="100%"
+                   fitcolumns="true"
+                   singleselect="true"
+                   toolbar="#tools2"
+                   url="@Url.Action("ProductList")"
+                   pagination="true">
+                <thead>
+                    <tr>
+                        <th field="ID" width="100">商品ID</th>
+                        <th field="FullName" width="100">商品名称</th>
+                        <th field="ABC" width="100">商品简称</th>
+                        <th field="KindName" width="100">商品类别</th>
+                        <th field="InPrice" width="100">建议采购价</th>
+                        <th field="OutPrice" width="100">建议销售价</th>
+                        <th field="Warning" width="100">库存预警</th>
+                        <th field="ProductFormat" width="100">商品规格</th>
+                        <th field="ProductModel" width="100">商品型号</th>
+                        <th field="Warning" width="100">库存预警</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- 修改类别的窗口 -->
+        <div id="wedit1" class="easyui-window" title="修改商品类别" data-options="modal:true,closed:true,iconCls:'icon-edit',minimizable:false,maximizable:false,
+			onResize:function(){
+				$(this).window('hcenter');
+			}" style="width:500px;height:320px;padding:10px;">
+            <div class="easyui-layout" data-options="fit:true">
+                <div data-options="region:'center'" style="padding:10px;">
+
+                    <!-- 修改类别的表单 -->
+                    @using (Ajax.BeginForm("Kindedit", new { }, new AjaxOptions() { OnSuccess = "updated();" }, new { id = "form_Kindedit" }))
+                    {
+                        <div style="margin-bottom:20px">
+                            <input class="easyui-textbox" name="KindName" style="width:100%" data-options="label:'商品类别名:',required:true">
+                            <input type="hidden" name="id" value="" />
+                        </div>
+                    }
+                </div>
+                <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:" onclick="Kindedit_ok();" style="width:80px">确定</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="$('#wedit1').window('close')" style="width:80px">取消</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

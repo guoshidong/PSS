@@ -1,0 +1,879 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PSSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="50" />
+          <Property Name="ABC" Type="varchar" MaxLength="50" />
+          <Property Name="KindID" Type="int" />
+          <Property Name="LinkmanName" Type="varchar" MaxLength="20" />
+          <Property Name="LinkmanTel" Type="varchar" MaxLength="20" />
+          <Property Name="BankName" Type="varchar" MaxLength="50" />
+          <Property Name="BankUserName" Type="varchar" MaxLength="50" />
+          <Property Name="BankCardNo" Type="varchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="ClientKind">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KindName" Type="varchar" MaxLength="20" />
+          <Property Name="OrderIndex" Type="float" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Depot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepotName" Type="varchar" MaxLength="20" />
+          <Property Name="EmpID" Type="int" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Emp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginName" Type="varchar" MaxLength="20" />
+          <Property Name="LoginPwd" Type="varchar" MaxLength="47" />
+          <Property Name="EmpName" Type="varchar" MaxLength="20" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="Tel" Type="varchar" MaxLength="20" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="InDepot">
+          <Key>
+            <PropertyRef Name="InNo" />
+          </Key>
+          <Property Name="InNo" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DepotID" Type="int" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="BusinessID" Type="int" />
+          <Property Name="OperationID" Type="int" />
+          <Property Name="Money" Type="money" />
+          <Property Name="State" Type="int" />
+          <Property Name="AuditID" Type="int" />
+          <Property Name="AuditTime" Type="datetime" />
+          <Property Name="AuditError" Type="varchar" MaxLength="100" />
+          <Property Name="Remark" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="InDepotDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InNo" Type="varchar" MaxLength="16" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" />
+          <Property Name="ProductUnit" Type="varchar" MaxLength="8" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Money" Type="money" />
+          <Property Name="Remark" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuName" Type="varchar" MaxLength="20" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="Url" Type="varchar" MaxLength="50" />
+          <Property Name="Icon" Type="varchar" MaxLength="10" />
+          <Property Name="OrderIndex" Type="float" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="OutDepot">
+          <Key>
+            <PropertyRef Name="OutID" />
+          </Key>
+          <Property Name="OutID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DepotID" Type="int" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="BusinessID" Type="int" />
+          <Property Name="OperationID" Type="int" />
+          <Property Name="Money" Type="money" />
+          <Property Name="State" Type="int" />
+          <Property Name="AuditID" Type="int" />
+          <Property Name="AuditTime" Type="datetime" />
+          <Property Name="AuditError" Type="varchar" MaxLength="100" />
+          <Property Name="Remark" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="OutDepotDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OutNo" Type="varchar" MaxLength="16" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" />
+          <Property Name="ProductUnit" Type="varchar" MaxLength="8" />
+          <Property Name="Count" Type="int" />
+          <Property Name="InPrice" Type="money" />
+          <Property Name="InMoney" Type="money" />
+          <Property Name="OutPrice" Type="money" />
+          <Property Name="OutMoney" Type="money" />
+          <Property Name="Remark" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Power">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="MenuID" Type="int" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+          <Property Name="ProductFormat" Type="varchar" MaxLength="50" />
+          <Property Name="ProductModel" Type="varchar" MaxLength="50" />
+          <Property Name="ProductUnit" Type="varchar" MaxLength="8" />
+          <Property Name="ABC" Type="varchar" MaxLength="100" />
+          <Property Name="KindID" Type="int" />
+          <Property Name="InPrice" Type="money" />
+          <Property Name="OutPrice" Type="money" />
+          <Property Name="Warning" Type="int" />
+          <Property Name="OrderIndex" Type="float" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductKind">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KindName" Type="varchar" MaxLength="20" />
+          <Property Name="OrderIndex" Type="float" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="20" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepotID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Money" Type="money" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="varchar" MaxLength="50" />
+          <Property Name="ABC" Type="varchar" MaxLength="50" />
+          <Property Name="KindID" Type="int" />
+          <Property Name="LinkmanName" Type="varchar" MaxLength="20" />
+          <Property Name="LinkmanTel" Type="varchar" MaxLength="20" />
+          <Property Name="BankName" Type="varchar" MaxLength="50" />
+          <Property Name="BankUserName" Type="varchar" MaxLength="50" />
+          <Property Name="BankCardNo" Type="varchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="SupplierKind">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KindName" Type="varchar" MaxLength="20" />
+          <Property Name="OrderIndex" Type="float" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Transfer">
+          <Key>
+            <PropertyRef Name="TranNo" />
+          </Key>
+          <Property Name="TranNo" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="OutDepotID" Type="int" />
+          <Property Name="InDepotID" Type="int" />
+          <Property Name="OperationID" Type="int" />
+          <Property Name="Money" Type="money" />
+          <Property Name="State" Type="int" />
+          <Property Name="AuditID" Type="int" />
+          <Property Name="AuditTime" Type="datetime" />
+          <Property Name="AuditError" Type="varchar" MaxLength="100" />
+          <Property Name="Remark" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="TransferDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TranNo" Type="varchar" MaxLength="16" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" />
+          <Property Name="ProductUnit" Type="varchar" MaxLength="8" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Money" Type="money" />
+          <Property Name="Remark" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“PSS.dbo.v_Product”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="v_Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+          <Property Name="ProductFormat" Type="varchar" MaxLength="50" />
+          <Property Name="ProductModel" Type="varchar" MaxLength="50" />
+          <Property Name="ProductUnit" Type="varchar" MaxLength="8" />
+          <Property Name="ABC" Type="varchar" MaxLength="100" />
+          <Property Name="KindID" Type="int" />
+          <Property Name="InPrice" Type="money" />
+          <Property Name="OutPrice" Type="money" />
+          <Property Name="Warning" Type="int" />
+          <Property Name="OrderIndex" Type="float" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="KindName" Type="varchar" MaxLength="20" />
+          <Property Name="TypeIndex" Type="float" />
+          <Property Name="TypeDeketed" Type="bit" />
+        </EntityType>
+        <EntityContainer Name="PSSModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientKind" EntityType="Self.ClientKind" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Depot" EntityType="Self.Depot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emp" EntityType="Self.Emp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InDepot" EntityType="Self.InDepot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InDepotDetail" EntityType="Self.InDepotDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OutDepot" EntityType="Self.OutDepot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OutDepotDetail" EntityType="Self.OutDepotDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Power" EntityType="Self.Power" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductKind" EntityType="Self.ProductKind" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierKind" EntityType="Self.SupplierKind" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transfer" EntityType="Self.Transfer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransferDetail" EntityType="Self.TransferDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_Product" EntityType="Self.v_Product" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_Product].[ID] AS [ID], 
+    [v_Product].[FullName] AS [FullName], 
+    [v_Product].[ProductName] AS [ProductName], 
+    [v_Product].[ProductFormat] AS [ProductFormat], 
+    [v_Product].[ProductModel] AS [ProductModel], 
+    [v_Product].[ProductUnit] AS [ProductUnit], 
+    [v_Product].[ABC] AS [ABC], 
+    [v_Product].[KindID] AS [KindID], 
+    [v_Product].[InPrice] AS [InPrice], 
+    [v_Product].[OutPrice] AS [OutPrice], 
+    [v_Product].[Warning] AS [Warning], 
+    [v_Product].[OrderIndex] AS [OrderIndex], 
+    [v_Product].[Deleted] AS [Deleted], 
+    [v_Product].[KindName] AS [KindName], 
+    [v_Product].[TypeIndex] AS [TypeIndex], 
+    [v_Product].[TypeDeketed] AS [TypeDeketed]
+    FROM [dbo].[v_Product] AS [v_Product]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PSSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ABC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KindID" Type="Int32" />
+          <Property Name="LinkmanName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LinkmanTel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ClientKind">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KindName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OrderIndex" Type="Double" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Depot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepotName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmpID" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Emp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LoginPwd" Type="String" MaxLength="47" FixedLength="false" Unicode="false" />
+          <Property Name="EmpName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="InDepot">
+          <Key>
+            <PropertyRef Name="InNo" />
+          </Key>
+          <Property Name="InNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DepotID" Type="Int32" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="BusinessID" Type="Int32" />
+          <Property Name="OperationID" Type="Int32" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="AuditID" Type="Int32" />
+          <Property Name="AuditTime" Type="DateTime" Precision="3" />
+          <Property Name="AuditError" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="InDepotDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProductUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remark" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Icon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OrderIndex" Type="Double" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="OutDepot">
+          <Key>
+            <PropertyRef Name="OutID" />
+          </Key>
+          <Property Name="OutID" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DepotID" Type="Int32" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="BusinessID" Type="Int32" />
+          <Property Name="OperationID" Type="Int32" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="AuditID" Type="Int32" />
+          <Property Name="AuditTime" Type="DateTime" Precision="3" />
+          <Property Name="AuditError" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="OutDepotDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OutNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProductUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="InPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="InMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OutPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OutMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remark" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Power">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="MenuID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="ABC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="KindID" Type="Int32" />
+          <Property Name="InPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OutPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Warning" Type="Int32" />
+          <Property Name="OrderIndex" Type="Double" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ProductKind">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KindName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OrderIndex" Type="Double" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepotID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ABC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KindID" Type="Int32" />
+          <Property Name="LinkmanName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LinkmanTel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="SupplierKind">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KindName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OrderIndex" Type="Double" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Transfer">
+          <Key>
+            <PropertyRef Name="TranNo" />
+          </Key>
+          <Property Name="TranNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="OutDepotID" Type="Int32" />
+          <Property Name="InDepotID" Type="Int32" />
+          <Property Name="OperationID" Type="Int32" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="AuditID" Type="Int32" />
+          <Property Name="AuditTime" Type="DateTime" Precision="3" />
+          <Property Name="AuditError" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TransferDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TranNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProductUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remark" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="PSSEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="ClientKind" EntityType="Self.ClientKind" />
+          <EntitySet Name="Depot" EntityType="Self.Depot" />
+          <EntitySet Name="Emp" EntityType="Self.Emp" />
+          <EntitySet Name="InDepot" EntityType="Self.InDepot" />
+          <EntitySet Name="InDepotDetail" EntityType="Self.InDepotDetail" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" />
+          <EntitySet Name="OutDepot" EntityType="Self.OutDepot" />
+          <EntitySet Name="OutDepotDetail" EntityType="Self.OutDepotDetail" />
+          <EntitySet Name="Power" EntityType="Self.Power" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="ProductKind" EntityType="Self.ProductKind" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" />
+          <EntitySet Name="SupplierKind" EntityType="Self.SupplierKind" />
+          <EntitySet Name="Transfer" EntityType="Self.Transfer" />
+          <EntitySet Name="TransferDetail" EntityType="Self.TransferDetail" />
+          <EntitySet Name="v_Product" EntityType="PSSModel.v_Product" />
+        </EntityContainer>
+        <EntityType Name="v_Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="ABC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="KindID" Type="Int32" />
+          <Property Name="InPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OutPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Warning" Type="Int32" />
+          <Property Name="OrderIndex" Type="Double" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="KindName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TypeIndex" Type="Double" />
+          <Property Name="TypeDeketed" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PSSModelStoreContainer" CdmEntityContainer="PSSEntities1">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="PSSModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ABC" ColumnName="ABC" />
+                <ScalarProperty Name="KindID" ColumnName="KindID" />
+                <ScalarProperty Name="LinkmanName" ColumnName="LinkmanName" />
+                <ScalarProperty Name="LinkmanTel" ColumnName="LinkmanTel" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankUserName" ColumnName="BankUserName" />
+                <ScalarProperty Name="BankCardNo" ColumnName="BankCardNo" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientKind">
+            <EntityTypeMapping TypeName="PSSModel.ClientKind">
+              <MappingFragment StoreEntitySet="ClientKind">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="KindName" ColumnName="KindName" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Depot">
+            <EntityTypeMapping TypeName="PSSModel.Depot">
+              <MappingFragment StoreEntitySet="Depot">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DepotName" ColumnName="DepotName" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emp">
+            <EntityTypeMapping TypeName="PSSModel.Emp">
+              <MappingFragment StoreEntitySet="Emp">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="LoginPwd" ColumnName="LoginPwd" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InDepot">
+            <EntityTypeMapping TypeName="PSSModel.InDepot">
+              <MappingFragment StoreEntitySet="InDepot">
+                <ScalarProperty Name="InNo" ColumnName="InNo" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="DepotID" ColumnName="DepotID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+                <ScalarProperty Name="OperationID" ColumnName="OperationID" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="AuditID" ColumnName="AuditID" />
+                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
+                <ScalarProperty Name="AuditError" ColumnName="AuditError" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InDepotDetail">
+            <EntityTypeMapping TypeName="PSSModel.InDepotDetail">
+              <MappingFragment StoreEntitySet="InDepotDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="InNo" ColumnName="InNo" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="PSSModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OutDepot">
+            <EntityTypeMapping TypeName="PSSModel.OutDepot">
+              <MappingFragment StoreEntitySet="OutDepot">
+                <ScalarProperty Name="OutID" ColumnName="OutID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="DepotID" ColumnName="DepotID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+                <ScalarProperty Name="OperationID" ColumnName="OperationID" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="AuditID" ColumnName="AuditID" />
+                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
+                <ScalarProperty Name="AuditError" ColumnName="AuditError" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OutDepotDetail">
+            <EntityTypeMapping TypeName="PSSModel.OutDepotDetail">
+              <MappingFragment StoreEntitySet="OutDepotDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OutNo" ColumnName="OutNo" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="InPrice" ColumnName="InPrice" />
+                <ScalarProperty Name="InMoney" ColumnName="InMoney" />
+                <ScalarProperty Name="OutPrice" ColumnName="OutPrice" />
+                <ScalarProperty Name="OutMoney" ColumnName="OutMoney" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Power">
+            <EntityTypeMapping TypeName="PSSModel.Power">
+              <MappingFragment StoreEntitySet="Power">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="PSSModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductFormat" ColumnName="ProductFormat" />
+                <ScalarProperty Name="ProductModel" ColumnName="ProductModel" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="ABC" ColumnName="ABC" />
+                <ScalarProperty Name="KindID" ColumnName="KindID" />
+                <ScalarProperty Name="InPrice" ColumnName="InPrice" />
+                <ScalarProperty Name="OutPrice" ColumnName="OutPrice" />
+                <ScalarProperty Name="Warning" ColumnName="Warning" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductKind">
+            <EntityTypeMapping TypeName="PSSModel.ProductKind">
+              <MappingFragment StoreEntitySet="ProductKind">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="KindName" ColumnName="KindName" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="PSSModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stock">
+            <EntityTypeMapping TypeName="PSSModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DepotID" ColumnName="DepotID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier">
+            <EntityTypeMapping TypeName="PSSModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="ABC" ColumnName="ABC" />
+                <ScalarProperty Name="KindID" ColumnName="KindID" />
+                <ScalarProperty Name="LinkmanName" ColumnName="LinkmanName" />
+                <ScalarProperty Name="LinkmanTel" ColumnName="LinkmanTel" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankUserName" ColumnName="BankUserName" />
+                <ScalarProperty Name="BankCardNo" ColumnName="BankCardNo" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierKind">
+            <EntityTypeMapping TypeName="PSSModel.SupplierKind">
+              <MappingFragment StoreEntitySet="SupplierKind">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="KindName" ColumnName="KindName" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transfer">
+            <EntityTypeMapping TypeName="PSSModel.Transfer">
+              <MappingFragment StoreEntitySet="Transfer">
+                <ScalarProperty Name="TranNo" ColumnName="TranNo" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="OutDepotID" ColumnName="OutDepotID" />
+                <ScalarProperty Name="InDepotID" ColumnName="InDepotID" />
+                <ScalarProperty Name="OperationID" ColumnName="OperationID" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="AuditID" ColumnName="AuditID" />
+                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
+                <ScalarProperty Name="AuditError" ColumnName="AuditError" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransferDetail">
+            <EntityTypeMapping TypeName="PSSModel.TransferDetail">
+              <MappingFragment StoreEntitySet="TransferDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TranNo" ColumnName="TranNo" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_Product">
+            <EntityTypeMapping TypeName="PSSModel.v_Product">
+              <MappingFragment StoreEntitySet="v_Product">
+                <ScalarProperty Name="TypeDeketed" ColumnName="TypeDeketed" />
+                <ScalarProperty Name="TypeIndex" ColumnName="TypeIndex" />
+                <ScalarProperty Name="KindName" ColumnName="KindName" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Warning" ColumnName="Warning" />
+                <ScalarProperty Name="OutPrice" ColumnName="OutPrice" />
+                <ScalarProperty Name="InPrice" ColumnName="InPrice" />
+                <ScalarProperty Name="KindID" ColumnName="KindID" />
+                <ScalarProperty Name="ABC" ColumnName="ABC" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="ProductModel" ColumnName="ProductModel" />
+                <ScalarProperty Name="ProductFormat" ColumnName="ProductFormat" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
